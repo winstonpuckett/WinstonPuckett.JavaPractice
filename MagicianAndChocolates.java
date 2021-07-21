@@ -47,39 +47,43 @@ import java.io.NotActiveException;
 */
 
 public class MagicianAndChocolates {
-    public void main(String[] args) {
-        int maxCholates = calculateMaxChocolatesEaten(3, new int[] { 6, 5 });
+    public static void main(String[] args) {
+        int maxCholates = calculateMaxChocolatesEaten(5, new int[] { 2, 4, 6, 8, 10 });
         System.out.println(maxCholates);
     }
 
-    private int calculateMaxChocolatesEaten(int timeUnits, int[] chocolateBags) {
+    private static int calculateMaxChocolatesEaten(int timeUnits, int[] chocolateBags) {
         int chocolatesEaten = 0;
 
         for (int i = 0; i < timeUnits; i++) {
-            ChocolateBagInformation largestBag = getIndexForLargestBag(chocolateBags);
+            var largestBag = getIndexForLargestBag(chocolateBags);
+            chocolatesEaten += largestBag.getChocolateCount();
+            chocolateBags[largestBag.getIndex()] = (int)Math.floor(largestBag.chocolateCount / 2);
         }
 
-        return 0;
+        return chocolatesEaten;
     }
 
-    private ChocolateBagInformation getIndexForLargestBag(int[] chocolateBags) {
+    private static ChocolateBagInformation getIndexForLargestBag(int[] chocolateBags) {
         var largestBag = new ChocolateBagInformation();
         
         for (int i = 0; i < chocolateBags.length; i++) {
             var currentChocolateCount = chocolateBags[i];
 
-            if (largestBag.getCount() < chocolateBags[i]) {
+            if (largestBag.getChocolateCount() < chocolateBags[i]) {
                 largestBag.setIndex(i);
-                largestBag.setCount(currentChocolateCount);
+                largestBag.setChocolateCount(currentChocolateCount);
             }
         }
 
         return largestBag;
     }
 
-    private class ChocolateBagInformation {
+    // Note: Static is a terrible idea here. Ideally this would be a POJO, but I'm having trouble
+    // doing that in one file.
+    private static class ChocolateBagInformation {
         private int index = 0;
-        private int count = 0;
+        private int chocolateCount = 0;
 
         public int getIndex() {
             return index;
@@ -88,11 +92,11 @@ public class MagicianAndChocolates {
             index = newIndex;
         }
 
-        public int getCount() {
-            return count;
+        public int getChocolateCount() {
+            return chocolateCount;
         }
-        public void setCount(int newCount) {
-            count = newCount;
+        public void setChocolateCount(int newCount) {
+            chocolateCount = newCount;
         }
     }
 }
