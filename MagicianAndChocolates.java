@@ -47,29 +47,52 @@ import java.io.NotActiveException;
 */
 
 public class MagicianAndChocolates {
-    public static void main(String[] args) {
+    public void main(String[] args) {
         int maxCholates = calculateMaxChocolatesEaten(3, new int[] { 6, 5 });
         System.out.println(maxCholates);
     }
 
-    private static int calculateMaxChocolatesEaten(int timeUnits, int[] chocolateBags) {
-        
+    private int calculateMaxChocolatesEaten(int timeUnits, int[] chocolateBags) {
+        int chocolatesEaten = 0;
+
+        for (int i = 0; i < timeUnits; i++) {
+            ChocolateBagInformation largestBag = getIndexForLargestBag(chocolateBags);
+        }
+
         return 0;
     }
 
-    private static int getIndexForLargestBag(int[] chocolateBags) {
-        var largestIndex = 0;
-        var largestChocolateCount = 0;
+    private ChocolateBagInformation getIndexForLargestBag(int[] chocolateBags) {
+        var largestBag = new ChocolateBagInformation();
         
         for (int i = 0; i < chocolateBags.length; i++) {
             var currentChocolateCount = chocolateBags[i];
 
-            if (largestChocolateCount < chocolateBags[i]) {
-                largestIndex = i;
-                largestChocolateCount = currentChocolateCount;
+            if (largestBag.getCount() < chocolateBags[i]) {
+                largestBag.setIndex(i);
+                largestBag.setCount(currentChocolateCount);
             }
         }
 
-        return largestIndex;
+        return largestBag;
+    }
+
+    private class ChocolateBagInformation {
+        private int index = 0;
+        private int count = 0;
+
+        public int getIndex() {
+            return index;
+        }
+        public void setIndex(int newIndex) {
+            index = newIndex;
+        }
+
+        public int getCount() {
+            return count;
+        }
+        public void setCount(int newCount) {
+            count = newCount;
+        }
     }
 }
