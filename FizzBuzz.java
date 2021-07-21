@@ -1,5 +1,7 @@
 /*
     Ideally this would be in a couple classes, but I'm trying to keep it in one class per practice.
+    No source information as I've been thinking about this problem for a long time.
+    It's definitely one of my favorite.
 */
 
 import java.util.List;
