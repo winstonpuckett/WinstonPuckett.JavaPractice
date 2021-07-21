@@ -53,7 +53,23 @@ public class MagicianAndChocolates {
     }
 
     private static int calculateMaxChocolatesEaten(int timeUnits, int[] chocolateBags) {
-        // TODO: This is the wrong answer.
+        
         return 0;
+    }
+
+    private static int getIndexForLargestBag(int[] chocolateBags) {
+        var largestIndex = 0;
+        var largestChocolateCount = 0;
+        
+        for (int i = 0; i < chocolateBags.length; i++) {
+            var currentChocolateCount = chocolateBags[i];
+
+            if (largestChocolateCount < chocolateBags[i]) {
+                largestIndex = i;
+                largestChocolateCount = currentChocolateCount;
+            }
+        }
+
+        return largestIndex;
     }
 }
