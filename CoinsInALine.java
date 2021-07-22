@@ -11,7 +11,7 @@
 
 public class CoinsInALine {
     public static void main(String[] args) {
-        var coins = new int[] { 1, 2, 3, 4 };
+        var coins = new int[] { 5, 4, 8, 10 };
 
         var result = calculateMaxCoins(coins);
 
@@ -20,36 +20,58 @@ public class CoinsInALine {
 
     private static int calculateMaxCoins(int[] coins) {
         var playerOneScore = 0;
-        var playerTwoScore = 0;
         var isPlayerOnesTurn = true;
 
         while (coins.length > 0) {
-            var tempCoinsArray = new int[coins.length - 1];
-            if (isPlayerOnesTurn) {
-                if (coins[0] > coins[coins.length - 1]) {
-                    playerOneScore += coins[0];
-                    System.arraycopy(coins, 1, tempCoinsArray, 0, coins.length - 1);
-                    coins = tempCoinsArray;
-                } else {
-                    playerOneScore += coins[coins.length - 1];
-                    System.arraycopy(coins, 0, tempCoinsArray, 0, coins.length - 1);
-                    coins = tempCoinsArray;
-                }
-            } else {
-                if (coins[0] > coins[coins.length - 1]) {
-                    playerTwoScore += coins[0];
-                    System.arraycopy(coins, 1, tempCoinsArray, 0, coins.length - 1);
-                    coins = tempCoinsArray;
-                } else {
-                    playerTwoScore += coins[coins.length - 1];
-                    System.arraycopy(coins, 0, tempCoinsArray, 0, coins.length - 1);
-                    coins = tempCoinsArray;
-                }
-            }
+            var result = takeTurn(coins);
 
+            if (isPlayerOnesTurn)
+                playerOneScore += result.getScore();
+            
+            coins = result.getCoinsLeft();
             isPlayerOnesTurn = !isPlayerOnesTurn;
         }
 
         return playerOneScore;
+    }
+
+    private static RoundResult takeTurn(int[] coins) {
+        if (shouldTakeFromBeginning(coins)) {
+            return new RoundResult(removeFirstIndex(coins), coins[0]);
+        } else {
+            return new RoundResult(removeLastIndex(coins), coins[coins.length - 1]);
+        }
+    }
+
+    private static boolean shouldTakeFromBeginning(int[] coins) {
+        return coins[0] > coins[coins.length - 1];
+    }
+
+    private static int[] removeFirstIndex(int[] array) {
+        var newArray = new int[array.length - 1];
+        System.arraycopy(array, 1, newArray, 0, array.length - 1);
+        return newArray;
+    }
+    private static int[] removeLastIndex(int[] array) {
+        var newArray = new int[array.length - 1];
+        System.arraycopy(array, 0, newArray, 0, array.length - 1);
+        return newArray;
+    }
+
+    private static class RoundResult {
+        private int[] coinsLeft;
+        private int score;
+
+        public RoundResult(int[] coinsLeft, int score) {
+            this.coinsLeft = coinsLeft;
+            this.score = score;
+        }
+
+        public int getScore() {
+            return score;
+        }
+        public int[] getCoinsLeft() {
+            return coinsLeft;
+        }
     }
 }

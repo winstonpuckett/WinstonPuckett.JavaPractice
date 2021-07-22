@@ -1,5 +1,3 @@
-import java.io.NotActiveException;
-
 /*
     Source: https://www.interviewbit.com/problems/magician-and-chocolates/
     Description: 
